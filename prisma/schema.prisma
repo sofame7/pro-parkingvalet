@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  role      String   @default("EMPLOYEE") // ADMIN | EMPLOYEE
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  schedules Schedule[] @relation("UserSchedules")
+}
+
+model Schedule {
+  id          String   @id @default(cuid())
+  date        DateTime
+  partner     String?  // Εξωτερικός συνεργάτης (form field)
+  event       String?
+  type        String   @default("Εντός") // Εντός / Εκτός
+  location    String?
+  timeframe   String?
+  peopleCount String?
+  carsCount   String?
+  team        String?
+  manager     String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]   @relation("UserSchedules")
+}

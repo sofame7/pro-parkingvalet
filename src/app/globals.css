@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #F5C400;
+  --primary-hover: #DCAE00;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --border: #e2e8f0;
+  --input: #f1f5f9;
+  --radius: 0.75rem; /* Rounded corners globally */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --font-sans: var(--font-inter);
+}
+
+.dark {
+  --background: #0B0B0B;
+  --foreground: #ededed;
+  --primary: #F5C400;
+  --primary-hover: #DCAE00;
+  --card: #1A1A1A;
+  --card-foreground: #ffffff;
+  --border: #333333;
+  --input: #262626;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Utilities for Glow and interaction */
+@utility glow {
+  box-shadow: 0 0 15px rgba(245, 196, 0, 0.4);
+}
+
+@utility hover-glow {
+  &:hover {
+    box-shadow: 0 0 20px rgba(245, 196, 0, 0.6);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+}
