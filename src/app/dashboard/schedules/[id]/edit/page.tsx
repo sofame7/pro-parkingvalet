@@ -4,13 +4,14 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import EditScheduleForm from "./ClientPage";
 
-export default async function EditSchedulePage({ params }: { params: { id: string } }) {
+export default async function EditSchedulePage({ params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/dashboard");
   }
 
-  const { id } = params;
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
   // Fetch the schedule to edit
   const schedule = await prisma.schedule.findUnique({
