@@ -54,7 +54,7 @@ export default async function DashboardPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {schedules.map((schedule) => (
-            <ScheduleCard key={schedule.id} schedule={schedule} currentUserId={session.user.id} />
+            <ScheduleCard key={schedule.id} schedule={schedule} currentUserId={session.user.id} isAdmin={isAdmin} />
           ))}
         </div>
       )}
