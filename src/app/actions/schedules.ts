@@ -100,3 +100,39 @@ async function sendEmailNotifications(schedule: any, users: any[]) {
     console.error("Email sending failed:", error);
   }
 }
+
+export async function deleteSchedule(id: string) {
+  await checkAdmin();
+  await prisma.schedule.delete({
+    where: { id }
+  });
+  revalidatePath("/dashboard");
+}
+
+export async function updateSchedule(id: string, data: any, userIds: string[]) {
+  await checkAdmin();
+  
+  const schedule = await prisma.schedule.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      partner: data.partner,
+      event: data.event,
+      type: data.type,
+      location: data.location,
+      timeframe: data.timeframe,
+      peopleCount: data.peopleCount,
+      carsCount: data.carsCount,
+      team: data.team,
+      manager: data.manager,
+      notes: data.notes,
+      users: {
+        set: userIds.map(id => ({ id }))
+      }
+    },
+    include: { users: true }
+  });
+
+  revalidatePath("/dashboard");
+  return schedule.id;
+}
