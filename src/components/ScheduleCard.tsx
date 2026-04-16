@@ -1,16 +1,37 @@
 "use client";
 
-import { Calendar, Clock, MapPin, Users, Car, UserCircle, Phone } from "lucide-react";
+import { useState } from "react";
+import { Calendar, Clock, MapPin, Users, Car, UserCircle, Phone, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { el } from "date-fns/locale";
+import Link from "next/link";
+import { deleteSchedule } from "@/app/actions/schedules";
+import toast from "react-hot-toast";
 
 export default function ScheduleCard({ 
   schedule, 
-  currentUserId 
+  currentUserId,
+  isAdmin
 }: { 
   schedule: any; 
   currentUserId?: string;
+  isAdmin?: boolean;
 }) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (confirm("Σίγουρα θέλετε να διαγράψετε αυτό το πρόγραμμα;")) {
+      setIsDeleting(true);
+      try {
+        await deleteSchedule(schedule.id);
+        toast.success("Το πρόγραμμα διαγράφηκε!");
+      } catch (err) {
+        toast.error("Σφάλμα κατά τη διαγραφή");
+        setIsDeleting(false);
+      }
+    }
+  };
+
   const formattedDate = format(new Date(schedule.date), "EEEE, d MMMM yyyy", { locale: el });
   
   // Find partners (co-workers assigned to the same schedule, excluding current user)
@@ -26,13 +47,25 @@ export default function ScheduleCard({
           <h3 className="font-bold text-lg">{schedule.event || 'Βάρδια'}</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">{formattedDate}</p>
         </div>
-        <span className={`px-2 py-1 text-xs font-semibold rounded-md ${
-          schedule.type === 'Εντός' 
-            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' 
-            : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300'
-        }`}>
-          {schedule.type}
-        </span>
+        <div className="flex flex-col items-end gap-2">
+          <span className={`px-2 py-1 text-xs font-semibold rounded-md ${
+            schedule.type === 'Εντός' 
+              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' 
+              : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300'
+          }`}>
+            {schedule.type}
+          </span>
+          {isAdmin && (
+            <div className="flex items-center gap-2 mt-1">
+              <Link href={`/dashboard/schedules/${schedule.id}/edit`} className="p-1.5 text-gray-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                <Edit size={16} />
+              </Link>
+              <button disabled={isDeleting} onClick={handleDelete} className="p-1.5 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50">
+                <Trash2 size={16} />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="space-y-3 flex-1">
