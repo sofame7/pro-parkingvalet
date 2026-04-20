@@ -15,7 +15,7 @@ export default async function DashboardPage() {
   let schedules = [];
   if (isAdmin) {
     schedules = await prisma.schedule.findMany({
-      orderBy: { date: "asc" },
+      orderBy: { createdAt: "desc" },
       include: { users: true },
     });
   } else {
@@ -27,24 +27,35 @@ export default async function DashboardPage() {
           },
         },
       },
-      orderBy: { date: "asc" },
+      orderBy: { createdAt: "desc" },
       include: { users: true },
     });
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Πρόγραμμα Εργασίας</h1>
-        {isAdmin && (
-          <Link
-            href="/dashboard/schedules/new"
-            className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-black px-4 py-2 rounded-xl font-semibold shadow-md glow transition-all"
-          >
-            <Plus size={20} />
-            <span className="hidden sm:inline">Νέο Πρόγραμμα</span>
-          </Link>
-        )}
+      <div className="flex justify-between items-center bg-card p-4 rounded-2xl border border-border sm:bg-transparent sm:border-none sm:p-0">
+        <h1 className="text-2xl font-bold hidden sm:block">Πρόγραμμα Εργασίας</h1>
+        <div className="flex gap-2 w-full sm:w-auto justify-end">
+          {isAdmin && (
+            <>
+              <Link
+                href="/dashboard/users"
+                className="flex items-center gap-2 bg-secondary hover:bg-secondary/80 text-foreground px-4 py-2 rounded-xl font-semibold shadow-sm transition-all border border-border"
+              >
+                <Plus size={20} />
+                <span>Νέος Υπάλληλος</span>
+              </Link>
+              <Link
+                href="/dashboard/schedules/new"
+                className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-black px-4 py-2 rounded-xl font-semibold shadow-md glow transition-all"
+              >
+                <Plus size={20} />
+                <span>Νέο Πρόγραμμα</span>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
 
       {schedules.length === 0 ? (
