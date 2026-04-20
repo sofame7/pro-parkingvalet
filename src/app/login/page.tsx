@@ -39,8 +39,19 @@ export default function LoginPage() {
             <img 
               src="https://i.imgur.com/bYie3uV.png" 
               alt="Pro Parking Valet" 
-              className="h-20 mx-auto object-contain mb-4"
+              className="h-20 mx-auto object-contain mb-6"
             />
+            
+            <div className="bg-amber-50 dark:bg-amber-900/10 rounded-2xl p-4 mb-6 border border-amber-100 dark:border-amber-900/20 shadow-sm">
+              <h3 className="text-[17px] font-bold text-gray-900 dark:text-white mb-2">
+                Καλώς ήρθες στην PRO Parking Valet! 🚗
+              </h3>
+              <p className="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed w-11/12 mx-auto">
+                Εδώ ξεκινά η κάθε σου βάρδια με οργάνωση και καλή διάθεση.<br/>
+                Δες το πρόγραμμά σου, ετοιμάσου και πάμε να προσφέρουμε κορυφαία εξυπηρέτηση — όπως πάντα!
+              </p>
+            </div>
+
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Καλώς ήρθατε</h2>
             <p className="text-sm text-gray-500 mt-1">Συνδεθείτε για να δείτε το πρόγραμμα</p>
           </div>
