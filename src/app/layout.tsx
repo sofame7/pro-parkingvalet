@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Pro Parking Valet",
   description: "Σύστημα Διαχείρισης Προγράμματος Valet Parking",
+  icons: {
+    icon: "https://i.imgur.com/8EwFPjP.png",
+  },
 };
 
 export default function RootLayout({
