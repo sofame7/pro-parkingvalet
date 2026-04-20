@@ -104,12 +104,21 @@ export default function ScheduleCard({
             {partners.map((p: any) => (
               <div key={p.id} className="flex justify-between items-center p-2 rounded-lg bg-gray-50 dark:bg-[#262626]">
                 <div className="flex items-center gap-2">
-                  <UserCircle size={16} className="text-gray-500" />
-                  <span className="text-sm font-medium">{p.name}</span>
+                  <UserCircle size={16} className={isAdmin ? "text-gray-800 dark:text-gray-200" : "text-gray-500"} />
+                  <span className={`text-sm ${isAdmin ? "font-bold text-gray-900 dark:text-white" : "font-medium"}`}>
+                    {p.name}
+                  </span>
                 </div>
                 {p.phone && (
-                  <a href={`tel:${p.phone}`} className="flex items-center gap-1 text-primary hover:underline text-xs font-medium">
-                    <Phone size={12} />
+                  <a 
+                    href={`tel:${p.phone}`} 
+                    className={`flex items-center gap-1 hover:underline transition-all ${
+                      isAdmin 
+                        ? "text-blue-600 dark:text-blue-400 text-[14px] font-bold" 
+                        : "text-white bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 px-2.5 py-1 rounded-md text-[13px] font-bold shadow-sm border border-emerald-600 dark:border-emerald-700"
+                    }`}
+                  >
+                    <Phone size={isAdmin ? 14 : 12} />
                     {p.phone}
                   </a>
                 )}
