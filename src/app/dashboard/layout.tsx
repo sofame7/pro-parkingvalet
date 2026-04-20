@@ -32,7 +32,7 @@ export default async function DashboardLayout({
                 <img src="https://i.imgur.com/bYie3uV.png" alt="Logo" className="h-8" />
               </Link>
               
-              <div className="hidden md:flex items-center gap-4">
+              <div className="flex items-center gap-4 sm:gap-4 md:gap-4 flex-wrap">
                 <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
                    Πρόγραμμα
                 </Link>
