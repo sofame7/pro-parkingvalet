@@ -15,7 +15,7 @@ export default async function DashboardPage() {
   let schedules = [];
   if (isAdmin) {
     schedules = await prisma.schedule.findMany({
-      orderBy: { date: "desc" },
+      orderBy: { date: "asc" },
       include: { users: true },
     });
   } else {
@@ -27,7 +27,7 @@ export default async function DashboardPage() {
           },
         },
       },
-      orderBy: { date: "desc" },
+      orderBy: { date: "asc" },
       include: { users: true },
     });
   }
