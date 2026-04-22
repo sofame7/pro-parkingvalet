@@ -37,9 +37,14 @@ export default async function DashboardLayout({
                    Πρόγραμμα
                 </Link>
                 {isAdmin && (
-                  <Link href="/dashboard/users" className="text-sm font-medium hover:text-primary transition-colors">
-                    Υπάλληλοι
-                  </Link>
+                  <>
+                    <Link href="/dashboard/users" className="text-sm font-medium hover:text-primary transition-colors">
+                      Υπάλληλοι
+                    </Link>
+                    <Link href="/dashboard/history" className="text-sm font-medium hover:text-primary transition-colors">
+                      Ιστορικό
+                    </Link>
+                  </>
                 )}
               </div>
             </div>
