@@ -11,16 +11,27 @@ export default async function DashboardPage() {
 
   const isAdmin = session.user.role === "ADMIN";
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   // Fetch schedules
   let schedules = [];
   if (isAdmin) {
     schedules = await prisma.schedule.findMany({
+      where: {
+        date: {
+          gte: today,
+        },
+      },
       orderBy: { date: "asc" },
       include: { users: true },
     });
   } else {
     schedules = await prisma.schedule.findMany({
       where: {
+        date: {
+          gte: today,
+        },
         users: {
           some: {
             id: session.user.id,
